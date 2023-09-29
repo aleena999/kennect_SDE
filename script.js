@@ -62,23 +62,31 @@ function bubbleSort() {
 
 // Quick Sort
 function quickSort() {
-    if (data.length <= 1) {
-        return data;
+    function partition(arr, low, high) {
+        const pivot = arr[high];
+        let i = low - 1;
+
+        for (let j = low; j <= high - 1; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+        return i + 1;
     }
 
-    const pivot = data[data.length - 1];
-    const left = [];
-    const right = [];
+    function quickSortRecursive(arr, low, high) {
+        if (low < high) {
+            const pi = partition(arr, low, high);
 
-    for (let i = 0; i < data.length - 1; i++) {
-        if (data[i] < pivot) {
-            left.push(data[i]);
-        } else {
-            right.push(data[i]);
+            quickSortRecursive(arr, low, pi - 1);
+            quickSortRecursive(arr, pi + 1, high);
         }
     }
 
-    data = [...quickSort(left), pivot, ...quickSort(right)];
+    quickSortRecursive(data, 0, data.length - 1);
     renderBars();
 }
 
