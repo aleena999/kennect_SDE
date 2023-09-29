@@ -2,12 +2,12 @@
   display: flex;
   align-items: flex-end;
 }
-/* style for bars */
+/* Style for bars */
 .bar {
   background-color: rgb(1, 82, 9);
   margin: 5px;
 }
-/* style for values */
+/* Style for values */
 .value-label {
   text-align: center;
   width: 20px;

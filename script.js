@@ -153,9 +153,9 @@ function changeSize() {
 
 // Initial rendering
 renderBars();
-window.addEventListener("resize", renderBars);
 
-// to render bars
+
+// To render bars
 function renderBars() {
     const barsContainer = document.getElementById("bars-container");
     barsContainer.innerHTML = "";
