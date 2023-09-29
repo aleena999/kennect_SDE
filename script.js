@@ -126,6 +126,7 @@ function mergeSort() {
     renderBars();
 }
 
+
 // Shell Sort
 function shellSort() {
     const n = data.length;
