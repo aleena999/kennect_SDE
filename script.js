@@ -1,4 +1,4 @@
-const data = [
+let data = [
     90, 6, 56, 56, 82, 33, 16, 34, 41, 80, 10, 24, 74, 67, 27, 54, 49, 19,
     1, 25, 98, 89, 26, 24, 3, 29, 78, 49, 99, 64, 82, 74, 8, 13, 73, 13, 85, 91, 45, 56, 75, 50, 5, 77, 15, 33, 12, 38
 ];
@@ -92,6 +92,7 @@ function quickSort() {
 
 // Merge Sort
 function mergeSort() {
+    // Function to merge two sorted parts of array
     function merge(left, right) {
         let result = [];
         let leftIndex = 0;
@@ -108,8 +109,9 @@ function mergeSort() {
         }
 
         return result.concat(left.slice(leftIndex), right.slice(rightIndex));
-    }
+    }   
 
+    // Function to implement merger sort in javaScript
     function mergeSortRecursive(arr) {
         if (arr.length <= 1) {
             return arr;
@@ -123,6 +125,8 @@ function mergeSort() {
     }
 
     data = mergeSortRecursive(data);
+
+    // Render the sorted bars
     renderBars();
 }
 
@@ -155,7 +159,7 @@ function changeSize() {
     const bars = document.querySelectorAll(".bar");
     bars.forEach((bar) => {
         const currentHeight = parseFloat(bar.style.height);
-        const newHeight = currentHeight * 0.5; 
+        const newHeight = currentHeight * 0.5;
         bar.style.height = newHeight + "px";
     });
 }
