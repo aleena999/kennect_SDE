@@ -5,10 +5,7 @@ let data = [
 
 // Function to randomize array
 function randomizeArray() {
-    for (let i = data.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [data[i], data[j]] = [data[j], data[i]];
-    }
+    data.sort(() => Math.random() - 0.5);
     renderBars();
 }
 
@@ -62,69 +59,62 @@ function bubbleSort() {
 
 // Quick Sort
 function quickSort() {
-    function partition(arr, low, high) {
-        const pivot = arr[high];
-        let i = low - 1;
+    function quickSort(arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
 
-        for (let j = low; j <= high - 1; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                [arr[i], arr[j]] = [arr[j], arr[i]];
+        const pivot = arr[Math.floor(arr.length / 2)];
+        const left = [];
+        const right = [];
+
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] < pivot) {
+                left.push(arr[i]);
+            } else if (arr[i] > pivot) {
+                right.push(arr[i]);
             }
         }
 
-        [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-        return i + 1;
+        return [...quickSort(left), pivot, ...quickSort(right)];
     }
-
-    function quickSortRecursive(arr, low, high) {
-        if (low < high) {
-            const pi = partition(arr, low, high);
-
-            quickSortRecursive(arr, low, pi - 1);
-            quickSortRecursive(arr, pi + 1, high);
-        }
-    }
-
-    quickSortRecursive(data, 0, data.length - 1);
+    data = quickSort(data);
     renderBars();
 }
 
 // Merge Sort
 function mergeSort() {
-    // Function to merge two sorted parts of array
-    function merge(left, right) {
-        let result = [];
-        let leftIndex = 0;
-        let rightIndex = 0;
+function mergeSort(arr) {
+  if (arr.length <= 1) {
+    return arr;
+  }
 
-        while (leftIndex < left.length && rightIndex < right.length) {
-            if (left[leftIndex] < right[rightIndex]) {
-                result.push(left[leftIndex]);
-                leftIndex++;
-            } else {
-                result.push(right[rightIndex]);
-                rightIndex++;
-            }
-        }
+  const middle = Math.floor(arr.length / 2);
+  const left = arr.slice(0, middle);
+  const right = arr.slice(middle);
 
-        return result.concat(left.slice(leftIndex), right.slice(rightIndex));
-    }   
+  return merge(mergeSort(left), mergeSort(right));
+}
 
-    // Function to implement merger sort in javaScript
-    function mergeSortRecursive(arr) {
-        if (arr.length <= 1) {
-            return arr;
-        }
+function merge(left, right) {
+  const result = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
 
-        const middle = Math.floor(arr.length / 2);
-        const left = arr.slice(0, middle);
-        const right = arr.slice(middle);
-
-        return merge(mergeSortRecursive(left), mergeSortRecursive(right));
+  while (leftIndex < left.length && rightIndex < right.length) {
+    if (left[leftIndex] < right[rightIndex]) {
+      result.push(left[leftIndex]);
+      leftIndex++;
+    } else {
+      result.push(right[rightIndex]);
+      rightIndex++;
     }
+  }
 
-    data = mergeSortRecursive(data);
+  return result.concat(left.slice(leftIndex), right.slice(rightIndex));
+}
+
+    data = mergeSort(data);
 
     // Render the sorted bars
     renderBars();
